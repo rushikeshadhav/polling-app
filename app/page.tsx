@@ -17,7 +17,7 @@ const PollingApp = () => {
   const [polls, setPolls] = useState<Poll[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-console.log(selectedOption)
+  console.log(selectedOption);
   useEffect(() => {
     const fetchPolls = async () => {
       setLoading(true);
@@ -35,7 +35,7 @@ console.log(selectedOption)
   const handleVote = async (pollId: number, optionId: number | null) => {
     if (!optionId) return;
     setLoading(true);
-    await fetch(`/api/polls/${pollId}/vote`, {
+    await fetch(`/api/polls/vote/${pollId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ optionId }),
@@ -89,7 +89,11 @@ console.log(selectedOption)
             ))}
             <button
               onClick={() => handleVote(poll.id, selectedOption)}
-              className={`mt-2 bg-blue-500 text-white px-2 py-1 rounded ${selectedOption === null || loading ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`mt-2 bg-blue-500 text-white px-2 py-1 rounded ${
+                selectedOption === null || loading
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
               disabled={selectedOption === null || loading}
             >
               {loading ? "Voting..." : "Vote"}

@@ -1,13 +1,12 @@
 import prisma from "@/lib/prisma";
 
-export async function POST(request) {
+export async function POST(request: Request) {
     const { question, options } = await request.json();
-console.log(question, options)
     const newPoll = await prisma.poll.create({
         data: {
             question,
             options: {
-                create: options.map((text) => ({ text })),
+                create: options.map((text: string) => ({ text })),
             },
         },
         include: { options: true },
